@@ -14,7 +14,7 @@
 
 void clock_init(void){
     //Set DCO frequency to 16 MHz
-    CS_setDCOFreq(CS_DCORSEL_1,CS_DCOFSEL_6);
+    CS_setDCOFreq(CS_DCORSEL_1,CS_DCOFSEL_4);
     //Set SMCLK = DCO with frequency divider of 1
     CS_initClockSignal(CS_SMCLK,CS_DCOCLK_SELECT,CS_CLOCK_DIVIDER_1);
     //Set MCLK = DCO with frequency divider of 2

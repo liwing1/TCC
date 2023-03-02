@@ -3,18 +3,20 @@
 #include "my_uart.h"
 #include "my_led.h"
 #include "my_spi.h"
+#include "my_pwm.h"
 
 
 void main(void){
     // stop watchdog
     WDT_A_hold(WDT_A_BASE);
-//    FRAMCtl_configureWaitStateControl(FRAMCTL_ACCESS_TIME_CYCLES_1);
+    FRAMCtl_configureWaitStateControl(FRAMCTL_ACCESS_TIME_CYCLES_1);
     PMM_unlockLPM5();
 
     clock_init();
     led_init();
     uart_init();
-    spi_init();
+    pwm_init();
+//    spi_init();
 
     __enable_interrupt();
 
@@ -25,8 +27,8 @@ void main(void){
     {
         uart_manager();
 
-        spi_data |= BIT7;
-        spi_tx(spi_data++);
+//        spi_data |= BIT7;
+//        spi_tx(spi_data++);
 
         uart_tx("sent = %x\r\n", spi_data);
         GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN1);
