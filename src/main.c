@@ -20,21 +20,21 @@ void main(void){
 
     __enable_interrupt();
 
-    uart_tx("MSP START: %x\r\n", CS_getACLK());
+    uart_tx("MSP START: %x\r\n", CS_getSMCLK());
 
-    uint8_t spi_data = 0;
+//    uint8_t spi_data = 0;
     while (1)
     {
         uart_manager();
 
 //        spi_data |= BIT7;
 //        spi_tx(spi_data++);
+//        uart_tx("sent = %x\r\n", spi_data);
 
-        uart_tx("sent = %x\r\n", spi_data);
         GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN1);
         __delay_cycles(5000000/2);
         GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN1);
-        __delay_cycles(5000000/2);
+        __delay_cycles(50000000/2);
         spi_manager();
     }
 }
