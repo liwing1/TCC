@@ -13,7 +13,7 @@
 #include "my_uart.h"
 
 
-#define _EXT_OSC_
+//#define _EXT_OSC_
 #define UART_BUFFER_SIZE    255
 
 
@@ -60,12 +60,12 @@ void uart_init(void){
         .secondModReg = 146,
         .overSampling = EUSCI_A_UART_LOW_FREQUENCY_BAUDRATE_GENERATION,
 #else           // Config for 1MHz
-        .clockPrescalar = 6,
-        .firstModReg = 8,
-        .secondModReg = 17,
+        .clockPrescalar = 104,
+        .firstModReg = 2,
+        .secondModReg = 182,
         .overSampling = EUSCI_A_UART_OVERSAMPLING_BAUDRATE_GENERATION,
 #endif
-        .selectClockSource = EUSCI_A_UART_CLOCKSOURCE_ACLK,
+        .selectClockSource = EUSCI_A_UART_CLOCKSOURCE_SMCLK,
         .parity = EUSCI_A_UART_NO_PARITY,
         .msborLsbFirst = EUSCI_A_UART_LSB_FIRST,
         .numberofStopBits = EUSCI_A_UART_ONE_STOP_BIT,

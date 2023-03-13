@@ -9,7 +9,7 @@
 #include "my_clock.h"
 
 
-#define _EXT_OSC_
+//#define _EXT_OSC_
 
 
 void clock_init(void){

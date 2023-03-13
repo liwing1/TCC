@@ -13,6 +13,15 @@
 // PWMfreq = SMCLK / TIMER_PERIOD -> 16MHz/1600 = 10KHz
 #define TIMER_PERIOD    1600
 
+static const Timer_A_initUpModeParam pwm_param = {
+    .clockSource = TIMER_A_CLOCKSOURCE_SMCLK,
+    .clockSourceDivider = TIMER_A_CLOCKSOURCE_DIVIDER_1,
+    .timerPeriod = TIMER_PERIOD,
+    .timerInterruptEnable_TAIE = TIMER_A_TAIE_INTERRUPT_DISABLE,
+    .captureCompareInterruptEnable_CCR0_CCIE = TIMER_A_CCIE_CCR0_INTERRUPT_DISABLE,
+    .timerClear = TIMER_A_DO_CLEAR,
+    .startTimer = false
+};
 
 const DRV_t DRV[HX_MAX] = {
     [H1_IN1] = {    //TA0.1 ; H1_IN1; P7.2
@@ -66,31 +75,20 @@ void pwm_init (void)
         GPIO_TERNARY_MODULE_FUNCTION
         );
 
-    //Start timer
-    Timer_A_initUpModeParam pwm_param = {
-     .clockSource = TIMER_A_CLOCKSOURCE_SMCLK,
-     .clockSourceDivider = TIMER_A_CLOCKSOURCE_DIVIDER_1,
-     .timerPeriod = TIMER_PERIOD,
-     .timerInterruptEnable_TAIE = TIMER_A_TAIE_INTERRUPT_DISABLE,
-     .captureCompareInterruptEnable_CCR0_CCIE = TIMER_A_CCIE_CCR0_INTERRUPT_DISABLE,
-     .timerClear = TIMER_A_DO_CLEAR,
-     .startTimer = false
-    };
-
     //Init Counter H1
-    Timer_A_initUpMode(TIMER_A0_BASE, &pwm_param);
+    Timer_A_initUpMode(TIMER_A0_BASE, (Timer_A_initUpModeParam*)&pwm_param);
     Timer_A_startCounter(TIMER_A0_BASE,
         TIMER_A_UP_MODE
         );
 
     //Init Counter H2
-    Timer_A_initUpMode(TIMER_A3_BASE, &pwm_param);
+    Timer_A_initUpMode(TIMER_A3_BASE, (Timer_A_initUpModeParam*)&pwm_param);
     Timer_A_startCounter(TIMER_A3_BASE,
         TIMER_A_UP_MODE
         );
 
     //Init Counter H3
-    Timer_A_initUpMode(TIMER_A1_BASE, &pwm_param);
+    Timer_A_initUpMode(TIMER_A1_BASE, (Timer_A_initUpModeParam*)&pwm_param);
     Timer_A_startCounter(TIMER_A1_BASE,
         TIMER_A_UP_MODE
         );
